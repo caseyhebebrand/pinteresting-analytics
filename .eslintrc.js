@@ -14,6 +14,7 @@ module.exports = {
       'jsx': true
     }
   },
+  
   rules: {
     /* Indentation */
     'no-mixed-spaces-and-tabs': 2,

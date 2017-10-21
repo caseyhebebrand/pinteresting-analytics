@@ -1,0 +1,12 @@
+CREATE DATABASE analytics;
+
+USE analytics;
+
+CREATE TABLE user_data (
+  id INT AUTO_INCREMENT NOT NULL,
+  userId varchar(200) NOT NULL,
+  ratio DECIMAL(5, 4) NOT NULL,
+  engagement DECIMAL(5, 4),
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+  PRIMARY KEY (id)
+);
