@@ -4,10 +4,10 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'analytics'
+  database: 'analytics',
 });
 
-connection.connect( (err) => {
+connection.connect((err) => {
   if (err) {
     console.log('could not connect to database', err);
   } else {
