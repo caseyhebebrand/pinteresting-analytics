@@ -27,6 +27,6 @@ app.listen(PORT, (err) => {
   if (err) {
     console.log('cannot connect to server', err);
   } else {
-    console.log(`client module listening on port ${port}`);
+    console.log(`client module listening on port ${PORT}`);
   }
 });
