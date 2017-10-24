@@ -19,8 +19,8 @@ class UserStats {
   }
 }
 
-const userLogOut = () => new UserStats();
+const userLogOut = () => new UserStats;
 
 module.exports = {
-  userLogOut,
+  userLogOut
 };

@@ -1,27 +1,27 @@
 const express = require('express');
 const data = require('./dataGenerator.js');
-const request = require('request-promise')
+const request = require('request-promise');
 
 const app = express();
 const PORT = 3001;
 
-const sendData = () {
+const sendData = () => {
   let body = data.userLogOut();
   let options = {
     method: 'POST',
-    url: 'https://127.0.0.1/analyze',
+    url: 'http://127.0.0.1:3000/analyze',
     body: body,
     json: true,
-  }
+  };
   
   request(options)
   .then( data => console.log('success sending data to analytics', data))
   .catch( err => console.error('post to analytics module failed', err));
 
-  let times = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
-  let timeElapsed = Math.floor(Math.random() * 9);
-  setInterval(sendData, timeElapsed);
+  setInterval(sendData, 5000);
 };
+
+sendData();
 
 app.listen(PORT, (err) => {
   if (err) {
