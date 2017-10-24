@@ -27,3 +27,21 @@ CREATE TABLE user_categories (
   FOREIGN KEY (userId) REFERENCES categories(id),
   FOREIGN KEY (categoryId) REFERENCES user_categories(id)
 );
+
+CREATE TABLE fake_client (
+  userId INT,
+  engagement DECIMAL(5, 4),
+  food INT,
+  fashion INT, 
+  products INT,
+  travel INT,
+  events INT,
+  design INT,
+  entertainment INT,
+  crafts INT,
+  photography INT
+);
+
+INSERT INTO categories (name) VALUES 
+  ("food"), ("fashion"), ("products"), ("sports"), ("travel"),
+  ("events"), ("design"), ("entertainment"), ("DIY/crafts"), ("photography");
