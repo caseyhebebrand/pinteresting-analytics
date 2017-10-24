@@ -3,10 +3,27 @@ CREATE DATABASE analytics;
 USE analytics;
 
 CREATE TABLE user_data (
-  id INT AUTO_INCREMENT NOT NULL,
-  userId varchar(200) NOT NULL,
+  id INT NOT NULL,
   ratio DECIMAL(5, 4) NOT NULL,
   engagement DECIMAL(5, 4),
+  category VARCHAR(200),
   createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
   PRIMARY KEY (id)
+);
+
+CREATE TABLE categories (
+  id INT AUTO INCREMENT NOT NULL,
+  name VARCHAR(200) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE user_categories (
+  id INT AUTO INCREMENT NOT NULL,
+  userId INT NOT NULL,
+  categoryId INT NOT NULL,
+  clicks INT,
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  PRIMARY KEY (id),
+  FOREIGN KEY (userId) REFERENCES categories(id),
+  FOREIGN KEY (categoryId) REFERENCES user_categories(id)
 );
