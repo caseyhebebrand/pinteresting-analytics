@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS analytics;
 CREATE DATABASE analytics;
 
 USE analytics;
@@ -12,20 +13,20 @@ CREATE TABLE user_data (
 );
 
 CREATE TABLE categories (
-  id INT AUTO INCREMENT NOT NULL,
+  id INT AUTO_INCREMENT NOT NULL,
   name VARCHAR(200) NOT NULL,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE user_categories (
-  id INT AUTO INCREMENT NOT NULL,
+  id INT AUTO_INCREMENT NOT NULL,
   userId INT NOT NULL,
   categoryId INT NOT NULL,
   clicks INT,
-  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  FOREIGN KEY (userId) REFERENCES categories(id),
-  FOREIGN KEY (categoryId) REFERENCES user_categories(id)
+  FOREIGN KEY (userId) REFERENCES user_data(id),
+  FOREIGN KEY (categoryId) REFERENCES categories(id)
 );
 
 CREATE TABLE fake_client (
