@@ -32,6 +32,7 @@ CREATE TABLE user_categories (
 CREATE TABLE fake_client (
   userId INT,
   engagement DECIMAL(5, 4),
+  calcualte TINYINT(1),
   food INT,
   fashion INT, 
   products INT,
