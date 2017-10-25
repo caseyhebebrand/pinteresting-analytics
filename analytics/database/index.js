@@ -26,13 +26,13 @@ const insertNewData = (params, callback) => {
   });
 };
 
-const insertAdClicks = (id, params, callback) => {
-  const query = `INSERT INTO user_inputs (userId, categoryId, clicks) VALUES (${id}, 1, ?), (${id}, 2, ?), (${id}, 3, ?), (${id}, 4, ?), (${id}, 5, ?), (${id}, 6, ?), (${id}, 7, ?), (${id}, 8, ?), (${id}, 9, ?), (${id}, 10, ?);`;
+const insertAdClicks = (id, params) => {
+  const query = `INSERT INTO user_inputs (usersId, categoryId, clicks) VALUES (${id}, 1, ?), (${id}, 2, ?), (${id}, 3, ?), (${id}, 4, ?), (${id}, 5, ?), (${id}, 6, ?), (${id}, 7, ?), (${id}, 8, ?), (${id}, 9, ?), (${id}, 10, ?);`;
   connection.query(query, params, (err, result) => {
     if (err) {
-      callback(err, null);
+      console.log('error inserting into db', err);
     } else {
-      callback(null, result);
+      console.log('success inserting into db', result);
     }
   });
 };
