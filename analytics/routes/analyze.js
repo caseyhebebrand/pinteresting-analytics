@@ -10,7 +10,7 @@ router.post('/', (req, res) => {
     params.push(inputs.adClicks[key]);
   }
   dashboard.submitInputIndex(inputs);
-  //db.insertAdClicks(inputs.userId, params);
+  db.insertAdClicks(inputs.userId, params);
  
 });
 
