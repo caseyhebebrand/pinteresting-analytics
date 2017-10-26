@@ -42,11 +42,9 @@ const insertAdClicks = (id, params) => {
 };
 
 const getUserHistory = (userId) => {
-  console.log('getting user history')
   const query = 'SELECT ratio, engagement FROM user_data WHERE userId = ?;';
   return connection.queryAsync(query, [userId])
     .then((data) => {
-      console.log('in here with data', data)
       return data;
     })
     .catch((err) => {
