@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const db = require('../database/index.js');
-const dashboard = require('../dashboard/index.js');
+const Promise = require('bluebird');
+//const dashboard = require('../dashboard/index.js');
+const analysis = require('../analysis/ratioRegression.js');
 
 router.post('/', (req, res) => {
   console.log('in ANALYZE ROUTER', req.body, req.body.adClicks);
@@ -9,8 +11,10 @@ router.post('/', (req, res) => {
   for (var key in inputs.adClicks) {
     params.push(inputs.adClicks[key]);
   }
-  dashboard.submitInputIndex(inputs);
-  db.insertAdClicks(inputs.userId, params);
+  //dashboard.submitInputIndex(inputs);
+  //db.insertAdClicks(inputs.userId, params);
+  analysis.calculateRatio(1, 0.52);
+
  
 });
 
