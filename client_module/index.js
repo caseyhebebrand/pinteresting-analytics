@@ -17,7 +17,7 @@ const sendData = () => {
     .then(results => console.log('success sending data to analytics', results))
     .catch(err => console.error('post to analytics module failed', err));
 
-  setInterval(sendData, 8000);
+  //setInterval(sendData, 8000);
 };
 
 sendData();
