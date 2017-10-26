@@ -70,10 +70,22 @@ const getClickHistory = (userId, callback) => {
   });
 };
 
+const getTopAdInterests = (userId) {
+  const query = 'SELECT i.name, u.categoryId, SUM(u.clicks) AS totalClicks FROM user_inputs AS u JOIN interests AS i ON i.id = u.categoryId WHERE u.usersId = ? GROUP BY i.name, u.categoryId ORDER BY totalClicks DESC LIMIT 3;';
+   connection.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error('err retreiving top ad interests', err);
+    } else {
+      console.log('success retrieving top ad categories', results);
+    }
+   });
+};
+
 module.exports = {
   insertNewData,
   insertAdClicks,
   getRatioHistory,
   getEnagementHistory,
   getClickHistory,
+  getTopAdInterests,
 };
