@@ -8,7 +8,7 @@ router.post('/', (req, res) => {
   console.log('in ANALYZE ROUTER', req.body, req.body.adClicks);
   const inputs = req.body;
   const params = [];
-  for (var key in inputs.adClicks) {
+  for (const key in inputs.adClicks) {
     params.push(inputs.adClicks[key]);
   }
   dashboard.submitInputIndex(inputs);
@@ -17,8 +17,6 @@ router.post('/', (req, res) => {
     .then((ratio) => {
       console.log('ratio', ratio);
     });
- 
-  
 });
 
 module.exports = router;

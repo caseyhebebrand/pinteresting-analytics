@@ -1,4 +1,5 @@
 const elasticsearch = require('elasticsearch');
+
 const client = new elasticsearch.Client({
   host: 'localhost:9200',
   log: 'trace',
@@ -6,7 +7,7 @@ const client = new elasticsearch.Client({
 
 client.ping({
   requestTimeout: 30000,
-}, function (error) {
+}, (error) => {
   if (error) {
     console.error('elasticsearch cluster is down!');
   } else {
@@ -15,7 +16,6 @@ client.ping({
 });
 
 const submitInputIndex = (userInputs) => {
-  console.log('in the dashboard function!!')
   client.index({
     index: 'analytics',
     type: 'inputs',
@@ -26,9 +26,9 @@ const submitInputIndex = (userInputs) => {
     } else {
       console.log('SUCCESS inserting into elastic search', result);
     }
-  })
-}
+  });
+};
 
 module.exports = {
   submitInputIndex,
-}
+};

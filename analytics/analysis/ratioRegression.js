@@ -15,31 +15,30 @@ const calculateRatio = (userId, currentScore) => {
         x2.push(result.engagement * result.engagement);
       });
 
-      let sigmaX = x.reduce((accum, value) => {
+      const sigmaX = x.reduce((accum, value) => {
         accum += value;
         return accum;
       });
 
-      let sigmaY = y.reduce((accum, value) => {
+      const sigmaY = y.reduce((accum, value) => {
         accum += value;
         return accum;
       });
 
-      let sigmaXY = xy.reduce((accum, value) => {
+      const sigmaXY = xy.reduce((accum, value) => {
         accum += value;
         return accum;
       });
 
-      let sigmaX2 = x2.reduce((accum, value) => {
+      const sigmaX2 = x2.reduce((accum, value) => {
         accum += value;
         return accum;
       });
 
-      let slope = ((length * sigmaXY) - (sigmaX * sigmaY)) / ((length * sigmaX2) - (sigmaX * sigmaX));
-      let intercept = (sigmaY - (slope * sigmaX)) / length;
-      let target = currentScore * 1.15;
-      let ratio = Number(((slope * target) + intercept).toPrecision(3));
-      
+      const slope = ((length * sigmaXY) - (sigmaX * sigmaY)) / ((length * sigmaX2) - (sigmaX * sigmaX));
+      const intercept = (sigmaY - (slope * sigmaX)) / length;
+      const target = currentScore * 1.15;
+      const ratio = Number(((slope * target) + intercept).toPrecision(3));
       return ratio;
     });
 };
