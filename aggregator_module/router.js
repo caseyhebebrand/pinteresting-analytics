@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
   console.log('in this AD AGGREGATOR', req.body);
   res.status(200).send();
 });
