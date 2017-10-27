@@ -37,8 +37,6 @@ const calculateRatio = (userId, currentScore) => {
         accum += value;
         return accum;
       });
-      console.log('LENGTH', length);
-      console.log('SIGMAS X Y XY X2', sigmaX, sigmaY, sigmaXY, sigmaX2);
       const slope = ((length * sigmaXY) - (sigmaX * sigmaY)) / ((length * sigmaX2) - (sigmaX * sigmaX));
       const intercept = (sigmaY - (slope * sigmaX)) / length;
       const target = currentScore * 1.15;
