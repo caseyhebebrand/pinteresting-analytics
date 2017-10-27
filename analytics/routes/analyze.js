@@ -1,14 +1,14 @@
 const router = require('express').Router();
 const db = require('../database/index.js');
 const Promise = require('bluebird');
-const dashboard = require('../dashboard/index.js');
+//const dashboard = require('../dashboard/index.js');
 const analysis = require('../analysis/ratioRegression.js');
 
 router.post('/', (req, res) => {
   console.log('in ANALYZE ROUTER', req.body, req.body.adClicks);
   const inputs = req.body;
   const userId = inputs.userId;
-  const engagement = inputs.engagement;
+  const engagement = inputs.engagementScore;
   const params = [];
   const outputs = {
     userId: userId,
@@ -18,12 +18,12 @@ router.post('/', (req, res) => {
     params.push(inputs.adClicks[key]);
   }
 
-  dashboard.submitInputIndex(inputs);
+  //dashboard.submitInputIndex(inputs);
   
   db.insertAdClicks(userId, params)
-    .then(() => {
+    .then((data) => {
       if (!inputs.scoreDropped) {
-        throw 
+        throw data;
       } else {
         return analysis.calculateRatio(userId, engagement);
       }
@@ -42,16 +42,12 @@ router.post('/', (req, res) => {
     })
     .then(() => {
       // send to ad aggregator
+      console.log('ABOUT TO SEND RESPONSE')
       res.status(200).send();
     })
-    .catch(() => {
+    .catch((data) => {
+      console.log('HERE IN CATCH')
       res.status(200).send();
-    });
-
-
-  analysis.calculateRatio(inputs.userId, inputs.engagementScore)
-    .then((ratio) => {
-      console.log('ratio', ratio);
     });
 });
 

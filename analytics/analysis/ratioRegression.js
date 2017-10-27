@@ -4,7 +4,7 @@ const calculateRatio = (userId, currentScore) => {
   return db.getUserHistory(userId)
     .then((results) => {
       if (results.length === 0) {
-        throw 
+        throw results;
       }
       const x = [];
       const y = [];
@@ -44,7 +44,8 @@ const calculateRatio = (userId, currentScore) => {
       const ratio = Number(((slope * target) + intercept).toPrecision(3));
       return ratio;
     })
-    .catch(() => {
+    .catch((results) => {
+      console.log('i am in the catch')
       return 0.15;
     })
 };
