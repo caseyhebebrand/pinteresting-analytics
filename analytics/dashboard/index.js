@@ -29,6 +29,21 @@ const submitInputIndex = (userInputs) => {
   });
 };
 
+const visualizeUserData = (userData) => {
+  client.index({
+    index: 'post-analysis',
+    type: 'output',
+    body: userData,
+  }, (err, result) => {
+    if (err) {
+      console.error('Elasticsearch insertion error', err);
+    } else {
+      console.log('SUCCESS inserting into elastic search', result);
+    }
+  });
+};
+
 module.exports = {
   submitInputIndex,
+  visualizeUserData,
 };

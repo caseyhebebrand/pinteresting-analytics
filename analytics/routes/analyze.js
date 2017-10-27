@@ -3,6 +3,7 @@ const db = require('../database/index.js');
 const Promise = require('bluebird');
 //const dashboard = require('../dashboard/index.js');
 const analysis = require('../analysis/ratioRegression.js');
+const workers = require('../workers/sendUserData.js');
 
 router.post('/', (req, res) => {
   console.log('in ANALYZE ROUTER', req.body, req.body.adClicks);

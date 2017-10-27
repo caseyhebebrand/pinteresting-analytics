@@ -11,3 +11,8 @@ const sendMessage = (message) => {
     .then(results => console.log('success sending data to ad aggregator', results))
     .catch(err => console.error('post to analytics module failed', err));
 };
+
+module.exports = {
+  sendMessage,
+};
+
