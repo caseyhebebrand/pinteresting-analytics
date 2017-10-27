@@ -41,12 +41,11 @@ router.post('/', (req, res) => {
       return db.insertNewData(param);
     })
     .then(() => {
+      // multiply by 32 
       // send to ad aggregator
-      console.log('ABOUT TO SEND RESPONSE')
       res.status(200).send();
     })
     .catch((data) => {
-      console.log('HERE IN CATCH')
       res.status(200).send();
     });
 });

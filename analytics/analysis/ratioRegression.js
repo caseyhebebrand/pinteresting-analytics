@@ -3,7 +3,7 @@ const db = require('../database/index.js');
 const calculateRatio = (userId, currentScore) => {
   return db.getUserHistory(userId)
     .then((results) => {
-      if (results.length === 0) {
+      if (results.length < 2) {
         throw results;
       }
       const x = [];
@@ -37,15 +37,21 @@ const calculateRatio = (userId, currentScore) => {
         accum += value;
         return accum;
       });
-
+      console.log('LENGTH', length);
+      console.log('SIGMAS X Y XY X2', sigmaX, sigmaY, sigmaXY, sigmaX2);
       const slope = ((length * sigmaXY) - (sigmaX * sigmaY)) / ((length * sigmaX2) - (sigmaX * sigmaX));
       const intercept = (sigmaY - (slope * sigmaX)) / length;
       const target = currentScore * 1.15;
       const ratio = Number(((slope * target) + intercept).toPrecision(3));
+      if (ratio < 0.4) {
+        ratio = 0.4;
+      } else if (ratio > 0.25) {
+        ratio = 0.25;
+      }
+      console.log('RATIO', ratio);
       return ratio;
     })
     .catch((results) => {
-      console.log('i am in the catch')
       return 0.15;
     })
 };
