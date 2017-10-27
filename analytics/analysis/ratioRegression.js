@@ -3,6 +3,9 @@ const db = require('../database/index.js');
 const calculateRatio = (userId, currentScore) => {
   return db.getUserHistory(userId)
     .then((results) => {
+      if (results.length === 0) {
+        throw 
+      }
       const x = [];
       const y = [];
       const xy = [];
@@ -40,7 +43,10 @@ const calculateRatio = (userId, currentScore) => {
       const target = currentScore * 1.15;
       const ratio = Number(((slope * target) + intercept).toPrecision(3));
       return ratio;
-    });
+    })
+    .catch(() => {
+      return 0.15;
+    })
 };
 
 module.exports = {
