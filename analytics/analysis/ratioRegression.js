@@ -6,6 +6,7 @@ const calculateRatio = (userId, currentScore) => {
       if (results.length < 2) {
         throw results;
       }
+      console.log('getting ready to calculate', results)
       const x = [];
       const y = [];
       const xy = [];
@@ -37,14 +38,12 @@ const calculateRatio = (userId, currentScore) => {
         accum += value;
         return accum;
       });
-      console.log('LENGTH', length);
-      console.log('SIGMAS X Y XY X2', sigmaX, sigmaY, sigmaXY, sigmaX2);
       const slope = ((length * sigmaXY) - (sigmaX * sigmaY)) / ((length * sigmaX2) - (sigmaX * sigmaX));
       const intercept = (sigmaY - (slope * sigmaX)) / length;
       const target = currentScore * 1.15;
-      const ratio = Number(((slope * target) + intercept).toPrecision(3));
-      if (ratio < 0.4) {
-        ratio = 0.4;
+      let ratio = Number(((slope * target) + intercept).toPrecision(3));
+      if (ratio < 0.04) {
+        ratio = 0.04;
       } else if (ratio > 0.25) {
         ratio = 0.25;
       }
@@ -52,7 +51,12 @@ const calculateRatio = (userId, currentScore) => {
       return ratio;
     })
     .catch((results) => {
-      return 0.15;
+      console.log('in algorithm catch', results.length, 'RESULTS', results);
+      if (results.length === 0) {
+        return 0.15;
+      } else if (results.length === 1) {
+        return 0.18;
+      }
     })
 };
 
