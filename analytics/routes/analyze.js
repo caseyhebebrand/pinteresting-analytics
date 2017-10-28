@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const db = require('../database/index.js');
 const Promise = require('bluebird');
-//const dashboard = require('../dashboard/index.js');
+const dashboard = require('../dashboard/index.js');
 const analysis = require('../analysis/ratioRegression.js');
 const workers = require('../workers/sendUserData.js');
 
@@ -19,8 +19,6 @@ router.post('/', (req, res) => {
     params.push(inputs.adClicks[key]);
   }
 
-  //dashboard.submitInputIndex(inputs);
-  
   db.insertAdClicks(userId, params)
     .then((data) => {
       if (!inputs.scoreDropped) {
@@ -44,11 +42,10 @@ router.post('/', (req, res) => {
       return db.insertNewData(param);
     })
     .then(() => {
-      console.log('about to send to the ad aggregator');
       workers.sendMessage(outputs);
+      dashboard.visualizeUserData(outputs);
     })
     .then(() => {
-      console.log('about to res.send');
       res.status(200).send();
     })
     .catch((data) => {
