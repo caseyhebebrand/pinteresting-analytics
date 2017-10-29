@@ -18,7 +18,6 @@ cbMysql.connect((err) => {
 const connection = Promise.promisifyAll(cbMysql);
 
 const insertNewData = (params) => {
-  console.log('params', params)
   const query = 'INSERT INTO user_data (userId, ratio, engagement, first, second, third) VALUES (?, ?, ?, ?, ?, ?);';
   return connection.queryAsync(query, params)
     .then((data) => {

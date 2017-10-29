@@ -47,11 +47,9 @@ const calculateRatio = (userId, currentScore) => {
       } else if (ratio > 0.25) {
         ratio = 0.25;
       }
-      console.log('RATIO', ratio);
       return ratio;
     })
     .catch((results) => {
-      console.log('in algorithm catch', results.length, 'RESULTS', results);
       if (results.length === 0) {
         return 0.15;
       } else if (results.length === 1) {

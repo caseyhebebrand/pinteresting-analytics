@@ -17,10 +17,10 @@ const sendData = () => {
     .then(results => console.log('success sending data to analytics', results))
     .catch(err => console.error('post to analytics module failed', err));
 
-  setInterval(sendData, 5000);
 };
 
-sendData();
+//sendData();
+setInterval(sendData, 100);
 
 app.listen(PORT, (err) => {
   if (err) {
