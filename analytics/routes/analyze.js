@@ -7,7 +7,6 @@ const workers = require('../workers/sendUserData.js');
 
 
 router.post('/', (req, res) => {
-  //console.log('in ANALYZE ROUTER', req.body);
   const inputs = req.body;
   const userId = inputs.userId;
   const engagement = inputs.engagementScore;
@@ -29,7 +28,6 @@ router.post('/', (req, res) => {
       }
     })
     .then((ratio) => {
-      //console.log('just got the ratio', ratio)
       outputs.ratio = ratio;
       outputs.numAds = Math.floor(32 * outputs.ratio);
       return db.getTopAdInterests(userId);
