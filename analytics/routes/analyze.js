@@ -25,10 +25,7 @@ router.post('/', (req, res) => {
   db.insertAdClicks(userId, params)
     .then((data) => {
       if (!inputs.scoreDropped) {
-        throw data;
-      } else {
         return analysis.calculateRatio(userId, engagement);
-      }
     })
     .then((ratio) => {
       //console.log('just got the ratio', ratio)
@@ -48,12 +45,9 @@ router.post('/', (req, res) => {
       workers.sendMessage(outputs);
       dashboard.visualizeUserData(outputs);
     })
-    .then(() => {
-      //res.status(200).send();
+    .catch((error) => {
+      console.log('Error in server:', error);
     })
-    .catch((data) => {
-      //res.status(200).send();
-    });
 });
 
 module.exports = router;

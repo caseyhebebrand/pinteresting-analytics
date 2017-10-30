@@ -54,7 +54,7 @@ const getUserHistory = (userId) => {
 };
 
 const getTopAdInterests = (userId) => {
-  const query = 'SELECT i.name, u.categoryId, SUM(u.clicks) AS totalClicks FROM user_inputs AS u JOIN interests AS i ON i.id = u.categoryId WHERE u.usersId = ? AND u.createdAt >= NOW() - INTERVAL 2 WEEKS GROUP BY i.name, u.categoryId ORDER BY totalClicks DESC LIMIT 3;';
+  const query = 'SELECT i.name, u.categoryId, SUM(u.clicks) AS totalClicks FROM user_inputs AS u JOIN interests AS i ON i.id = u.categoryId WHERE u.usersId = ? AND u.createdAt >= NOW() - INTERVAL 2 WEEK GROUP BY i.name, u.categoryId ORDER BY totalClicks DESC LIMIT 3;';
   return connection.queryAsync(query, [userId])
     .then((data) => {
       return data;
