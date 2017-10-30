@@ -16,31 +16,39 @@ client.ping({
 });
 
 const submitInputIndex = (userInputs) => {
-  client.index({
-    index: 'analytics',
-    type: 'inputs',
-    body: userInputs,
-  }, (err, result) => {
-    if (err) {
-      console.error('Elasticsearch insertion error', err);
-    } else {
-      console.log('SUCCESS inserting into elastic search', result);
-    }
-  });
+  return new Promise ((resolve, reject) => {
+    client.index({
+      index: 'analytics',
+      type: 'inputs',
+      body: userInputs,
+    }, (err, result) => {
+      if (err) {
+        console.error('Elasticsearch insertion error', err);
+        reject(err);
+      } else {
+        console.log('SUCCESS inserting into elastic search', result);
+        resolve(result);
+      }
+    });
+  })
 };
 
 const visualizeUserData = (userData) => {
-  client.index({
-    index: 'post-analysis',
-    type: 'output',
-    body: userData,
-  }, (err, result) => {
-    if (err) {
-      console.error('Elasticsearch insertion error', err);
-    } else {
-      console.log('SUCCESS inserting into elastic search', result);
-    }
-  });
+  return new Promise ((resolve, reject) => {
+    client.index({
+      index: 'post-analysis',
+      type: 'output',
+      body: userData,
+    }, (err, result) => {
+      if (err) {
+        console.error('Elasticsearch insertion error', err);
+        reject(err);
+      } else {
+        console.log('SUCCESS inserting into elastic search', result);
+        resolve(result);
+      }
+    });
+  })
 };
 
 module.exports = {

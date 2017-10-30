@@ -47,8 +47,10 @@ router.post('/', (req, res) => {
      
     })
     .then(() => {
-
-      //dashboard.visualizeUserData(outputs);
+      return dashboard.visualizeUserData(outputs);
+    })
+    .then(() => {
+      console.log('DONE WITH THE DASHBOARD')
     })
     .catch((error) => {
       console.log('Error in server:', error);
