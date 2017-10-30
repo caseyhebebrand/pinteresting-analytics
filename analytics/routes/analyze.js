@@ -26,6 +26,7 @@ router.post('/', (req, res) => {
     .then((data) => {
       if (!inputs.scoreDropped) {
         return analysis.calculateRatio(userId, engagement);
+      }
     })
     .then((ratio) => {
       //console.log('just got the ratio', ratio)
@@ -42,8 +43,12 @@ router.post('/', (req, res) => {
       return db.insertNewData(param);
     })
     .then(() => {
-      workers.sendMessage(outputs);
-      dashboard.visualizeUserData(outputs);
+      return workers.sendMessage(outputs);
+     
+    })
+    .then(() => {
+
+      //dashboard.visualizeUserData(outputs);
     })
     .catch((error) => {
       console.log('Error in server:', error);
