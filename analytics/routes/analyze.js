@@ -5,8 +5,9 @@ const dashboard = require('../dashboard/index.js');
 const analysis = require('../analysis/ratioRegression.js');
 const workers = require('../workers/sendUserData.js');
 
+
 router.post('/', (req, res) => {
-  console.log('in ANALYZE ROUTER', req.body);
+  //console.log('in ANALYZE ROUTER', req.body);
   const inputs = req.body;
   const userId = inputs.userId;
   const engagement = inputs.engagementScore;
@@ -19,6 +20,8 @@ router.post('/', (req, res) => {
     params.push(inputs.adClicks[key]);
   }
 
+  res.send();
+
   db.insertAdClicks(userId, params)
     .then((data) => {
       if (!inputs.scoreDropped) {
@@ -28,7 +31,7 @@ router.post('/', (req, res) => {
       }
     })
     .then((ratio) => {
-      console.log('just got the ratio', ratio)
+      //console.log('just got the ratio', ratio)
       outputs.ratio = ratio;
       outputs.numAds = Math.floor(32 * outputs.ratio);
       return db.getTopAdInterests(userId);
@@ -46,10 +49,10 @@ router.post('/', (req, res) => {
       dashboard.visualizeUserData(outputs);
     })
     .then(() => {
-      res.status(200).send();
+      //res.status(200).send();
     })
     .catch((data) => {
-      res.status(200).send();
+      //res.status(200).send();
     });
 });
 
