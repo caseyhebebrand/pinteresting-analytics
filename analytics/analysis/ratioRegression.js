@@ -6,7 +6,6 @@ const calculateRatio = (userId, currentScore) => {
       if (results.length < 2) {
         throw results;
       }
-      console.log('getting ready to calculate', results)
       const x = [];
       const y = [];
       const xy = [];
