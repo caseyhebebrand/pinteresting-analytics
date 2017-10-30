@@ -24,10 +24,13 @@ router.post('/', (req, res) => {
   db.insertAdClicks(userId, params)
     .then((data) => {
       if (!inputs.scoreDropped) {
+        throw data;
+      } else {
         return analysis.calculateRatio(userId, engagement);
       }
     })
     .then((ratio) => {
+      console.log('RATIO', ratio)
       outputs.ratio = ratio;
       outputs.numAds = Math.floor(32 * outputs.ratio);
       return db.getTopAdInterests(userId);
@@ -51,7 +54,7 @@ router.post('/', (req, res) => {
       console.log('DONE WITH THE DASHBOARD')
     })
     .catch((error) => {
-      console.log('Error in server:', error);
+      console.log(error);
     })
 });
 
