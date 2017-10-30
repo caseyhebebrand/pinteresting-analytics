@@ -30,7 +30,6 @@ router.post('/', (req, res) => {
       }
     })
     .then((ratio) => {
-      console.log('RATIO', ratio)
       outputs.ratio = ratio;
       outputs.numAds = Math.floor(32 * outputs.ratio);
       return db.getTopAdInterests(userId);
@@ -44,17 +43,14 @@ router.post('/', (req, res) => {
       return db.insertNewData(param);
     })
     .then(() => {
+      console.log('about to send message')
       return workers.sendMessage(outputs);
-     
     })
     .then(() => {
       return dashboard.visualizeUserData(outputs);
     })
-    .then(() => {
-      console.log('DONE WITH THE DASHBOARD')
-    })
     .catch((error) => {
-      console.log(error);
+      //console.log('CATCH:', error);
     })
 });
 

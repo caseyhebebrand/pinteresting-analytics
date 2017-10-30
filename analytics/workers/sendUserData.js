@@ -1,6 +1,7 @@
 const request = require('request-promise');
 
 const sendMessage = (message) => {
+  console.log('IN SEND MESSAGE')
   return new Promise ((resolve, reject) => {
     const options = {
       method: 'POST',

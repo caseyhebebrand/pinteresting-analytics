@@ -42,7 +42,7 @@ const insertAdClicks = (id, params) => {
 };
 
 const getUserHistory = (userId) => {
-  const query = 'SELECT ratio, engagement FROM user_data WHERE userId = ? LIMIT 50;';
+  const query = 'SELECT ratio, engagement FROM user_data WHERE userId = ? ORDER BY createdAt DESC LIMIT 50;';
   return connection.queryAsync(query, [userId])
     .then((data) => {
       return data;

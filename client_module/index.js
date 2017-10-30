@@ -20,7 +20,7 @@ const sendData = () => {
 };
 
 //sendData();
-setInterval(sendData, 20);
+setInterval(sendData, 100);
 
 app.listen(PORT, (err) => {
   if (err) {
