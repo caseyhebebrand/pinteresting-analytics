@@ -3,18 +3,27 @@ const aws = require('aws-sdk');
 // load aws credentials
 aws.config.loadFromPath(__dirname + '/config.json');
 
-
 // Instantiate SQS 
 const sqs = new aws.SQS();
 
-const send = (params) => {
+const receive = (params) => {
   return new Promise ((resolve, reject) => {
-    sqs.sendMessage(params, (err, data) => {
+    sqs.receiveMessage(params, (err, data) => {
       if (err) {
-        console.log('error sending message to SQS:', err);
         reject(err);
       } else {
-        console.log('success sending message to SQS:', data);
+        resolve(data);
+      }
+    });
+  });
+};
+
+const delete = (params) => {
+  return new Promise ((resolve, reject) =. {
+    sqs.deleteMessage(params, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
         resolve(data);
       }
     });
@@ -22,5 +31,6 @@ const send = (params) => {
 };
 
 module.exports = {
-  send,
+  receive,
+  delete,
 };
