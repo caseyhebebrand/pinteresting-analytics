@@ -26,7 +26,7 @@ const processData = () => {
       outputs.userId = userId;
       engagement = inputs.engagementScore;
       params = {
-        QueueUrl: queueUrl,
+        QueueUrl: queueUrl.INPUT_QUEUE_URL,
         ReceiptHandle: data.Messages[0].ReceiptHandle,
       };
       return sqsInput.deleteSQS(params);

@@ -30,8 +30,10 @@ const sendMessage = (params) => {
   return new Promise((resolve, reject) => {
     sqs.sendMessage(params, (err, data) => {
       if (err) {
+        console.log('error sending message to ads', err);
         reject(err);
       } else {
+        console.log('success sending message to ads', data)
         resolve(data);
       }
     });
