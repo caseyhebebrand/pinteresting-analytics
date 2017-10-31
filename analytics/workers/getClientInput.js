@@ -8,8 +8,10 @@ const receiveSQS = (params) => {
   return new Promise((resolve, reject) => {
     sqs.receiveMessage(params, (err, data) => {
       if (err) {
+        //console.log('error receiving')
         reject(err);
       } else {
+        //console.log('success receiving')
         resolve(data);
       }
     });

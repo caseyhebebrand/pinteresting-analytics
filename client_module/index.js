@@ -7,20 +7,6 @@ const queueUrl = require('../config.js');
 const app = express();
 const PORT = 2020;
 
-// const sendData = () => {
-//   const body = data.userLogOut();
-//   const options = {
-//     method: 'POST',
-//     url: 'http://127.0.0.1:3000/analyze',
-//     body,
-//     json: true,
-//   };
-//   request(options)
-//     .then(results => console.log('success sending data to analytics', results))
-//     .catch(err => console.error('post to analytics module failed', err));
-
-// };
-
 const sendData = () => {
   const body = data.userLogOut();
   const params = {
@@ -34,11 +20,8 @@ const sendData = () => {
     .catch(err => console.error('send to SQS failed', err));
 };
 
-sendData();
-sendData();
-sendData();
-sendData();
-//setInterval(sendData, 100);
+
+setInterval(sendData, 80);
 
 app.listen(PORT, (err) => {
   if (err) {

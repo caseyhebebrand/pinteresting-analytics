@@ -63,6 +63,7 @@ const processData = () => {
       return sqsOutput.sendMessage(params);
     })
     .then(() => {
+      console.log("DATA JUST SENT")
       return dashboard.visualizeUserData(outputs);
     })
     .then(() => {
@@ -74,54 +75,6 @@ const processData = () => {
     });  
 }
 
-processData();
-
-
-// router.post('/', (req, res) => {
-//   const inputs = req.body;
-//   const userId = inputs.userId;
-//   const engagement = inputs.engagementScore;
-//   const params = [];
-//   const topCategories = [];
-//   const outputs = {
-//     userId: userId,
-//     interests: [],
-//   };
-//   for (const key in inputs.adClicks) {
-//     params.push(inputs.adClicks[key]);
-//   }
-
-//   res.send();
-
-//   db.insertAdClicks(userId, params)
-//     .then((data) => {
-//       if (!inputs.scoreDropped) {
-//         throw data;
-//       } else {
-//         return analysis.calculateRatio(userId, engagement);
-//       }
-//     })
-//     .then((ratio) => {
-//       outputs.ratio = ratio;
-//       outputs.numAds = Math.floor(32 * outputs.ratio);
-//       return db.getTopAdInterests(userId);
-//     })
-//     .then((interests) => {
-//       interests.forEach((interest) => {
-//         outputs.interests.push(interest.name);
-//         topCategories.push(interest.categoryId);
-//       });
-//       return workers.sendMessage(outputs);
-//     })
-//     .then(() => {
-//       return dashboard.visualizeUserData(outputs);
-//     })
-//     .then(() => {
-//       const param = [userId, outputs.ratio, engagement].concat(topCategories);
-//       return db.insertNewData(param);
-//     })
-//     .catch((error) => {
-//     })
-// });
+setInterval(processData, 2000);
 
 module.exports = router;

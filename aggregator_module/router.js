@@ -21,13 +21,6 @@ const processData = () => {
     });
 };
 
-processData();
-
-// router.post('/', (req, res) => {
-//   console.log('AD AGGREGATOR', req.body);
-//   res.status(200).send();
-// });
-
-
+setInterval(processData, 1000);
 
 module.exports = router;
