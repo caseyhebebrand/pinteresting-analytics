@@ -1,3 +1,5 @@
+config.json
+
 # Project specific
 config/development.json
 config/production.json
