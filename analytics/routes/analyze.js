@@ -11,6 +11,7 @@ router.post('/', (req, res) => {
   const userId = inputs.userId;
   const engagement = inputs.engagementScore;
   const params = [];
+  const topCategories = [];
   const outputs = {
     userId: userId,
     interests: [],
@@ -35,22 +36,20 @@ router.post('/', (req, res) => {
       return db.getTopAdInterests(userId);
     })
     .then((interests) => {
-      const param = [userId, outputs.ratio, engagement];
       interests.forEach((interest) => {
         outputs.interests.push(interest.name);
-        param.push(interest.categoryId);
+        topCategories.push(interest.categoryId);
       });
-      return db.insertNewData(param);
-    })
-    .then(() => {
-      console.log('about to send message')
       return workers.sendMessage(outputs);
     })
     .then(() => {
       return dashboard.visualizeUserData(outputs);
     })
+    .then(() => {
+      const param = [userId, outputs.ratio, engagement].concat(topCategories);
+      return db.insertNewData(param);
+    })
     .catch((error) => {
-      //console.log('CATCH:', error);
     })
 });
 

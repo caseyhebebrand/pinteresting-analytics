@@ -1,7 +1,6 @@
 const request = require('request-promise');
 
 const sendMessage = (message) => {
-  console.log('IN SEND MESSAGE')
   return new Promise ((resolve, reject) => {
     const options = {
       method: 'POST',
@@ -11,7 +10,7 @@ const sendMessage = (message) => {
     };
     request(options)
       .then((results) => {
-        console.log('success sending data to ad aggregator', results);
+      console.log('success sending data to ad aggregator', results);
         resolve(results);
       })
       .catch((err) =>{
