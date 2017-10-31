@@ -3,9 +3,9 @@ const db = require('../database/index.js');
 const Promise = require('bluebird');
 const dashboard = require('../dashboard/index.js');
 const analysis = require('../analysis/ratioRegression.js');
-const workers = require('../workers/sendUserData.js');
+const sqsOutput = require('../workers/sendUserData.js');
 const sqsInput = require('../workers/getClientInput.js');
-const queueUrl = require('../../config.js').QUEUE_URL;
+const queueUrl = require('../../config.js');
 
 const processData = () => {
   let inputs;
@@ -16,7 +16,7 @@ const processData = () => {
   };
   let topCategories = [];
   let params = {
-    QueueUrl: queueUrl,
+    QueueUrl: queueUrl.INPUT_QUEUE_URL,
     VisibilityTimeout: 300,
   };
   sqsInput.receiveSQS(params)
@@ -55,8 +55,12 @@ const processData = () => {
         outputs.interests.push(interest.name);
         topCategories.push(interest.categoryId);
       });
-      console.log(outputs);
-      //return workers.sendMessage(outputs);
+      params = {
+        MessageBody: JSON.stringify(outputs),
+        QueueUrl: queueUrl.OUTPUT_QUEUE_URL,
+        DelaySeconds: 0,
+      };
+      return sqsOutput.sendMessage(params);
     })
     .then(() => {
       return dashboard.visualizeUserData(outputs);

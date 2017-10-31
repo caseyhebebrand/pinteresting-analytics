@@ -2,7 +2,7 @@ const express = require('express');
 const data = require('./dataGenerator.js');
 const request = require('request-promise');
 const worker = require('./worker.js');
-const queueUrl = require('../config.js').QUEUE_URL;
+const queueUrl = require('../config.js');
 
 const app = express();
 const PORT = 2020;
@@ -25,7 +25,7 @@ const sendData = () => {
   const body = data.userLogOut();
   const params = {
     MessageBody: JSON.stringify(body),
-    QueueUrl: queueUrl,
+    QueueUrl: queueUrl.INPUT_QUEUE_URL,
     DelaySeconds: 0,
   };
 
