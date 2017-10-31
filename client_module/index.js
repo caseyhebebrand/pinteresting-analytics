@@ -5,7 +5,7 @@ const worker = require('./worker.js');
 const queueUrl = require('../config.js').QUEUE_URL;
 
 const app = express();
-const PORT = 3001;
+const PORT = 2020;
 
 // const sendData = () => {
 //   const body = data.userLogOut();
@@ -34,6 +34,9 @@ const sendData = () => {
     .catch(err => console.error('send to SQS failed', err));
 };
 
+sendData();
+sendData();
+sendData();
 sendData();
 //setInterval(sendData, 100);
 
