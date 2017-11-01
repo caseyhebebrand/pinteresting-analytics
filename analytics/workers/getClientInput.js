@@ -3,17 +3,14 @@ const Consumer = require('sqs-consumer');
 const queueUrl = require('../../config.js').INPUT_QUEUE_URL;
 const processData = require('./process.js').process;
 
-
-
 // load aws credentials
 AWS.config.loadFromPath(__dirname + '/config.json');
 
 const consumer = Consumer.create({
-  queueUrl: queueUrl,
+  queueUrl,
   waitTimeSeconds: 10,
   handleMessage: (message, done) => {
-    console.log('getting the message');
-    processData(message);
+    processData(message.Body);
     done();
   },
   sqs: new AWS.SQS(),
