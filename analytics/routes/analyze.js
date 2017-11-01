@@ -3,26 +3,41 @@ const db = require('../database/index.js');
 const Promise = require('bluebird');
 const dashboard = require('../dashboard/index.js');
 const analysis = require('../analysis/ratioRegression.js');
-const workers = require('../workers/sendUserData.js');
+const sqsOutput = require('../workers/sendUserData.js');
+const sqsInput = require('../workers/getClientInput.js');
+const queueUrl = require('../../config.js');
 
-
-router.post('/', (req, res) => {
-  const inputs = req.body;
-  const userId = inputs.userId;
-  const engagement = inputs.engagementScore;
-  const params = [];
-  const topCategories = [];
-  const outputs = {
-    userId: userId,
+const processData = () => {
+  let inputs;
+  let userId;
+  let engagement;
+  let outputs = {
     interests: [],
   };
-  for (const key in inputs.adClicks) {
-    params.push(inputs.adClicks[key]);
-  }
-
-  res.send();
-
-  db.insertAdClicks(userId, params)
+  let topCategories = [];
+  let params = {
+    QueueUrl: queueUrl.INPUT_QUEUE_URL,
+    VisibilityTimeout: 300,
+  };
+  sqsInput.receiveSQS(params)
+    .then((data) => {
+      inputs = JSON.parse(data.Messages[0].Body);
+      userId = inputs.userId;
+      outputs.userId = userId;
+      engagement = inputs.engagementScore;
+      params = {
+        QueueUrl: queueUrl.INPUT_QUEUE_URL,
+        ReceiptHandle: data.Messages[0].ReceiptHandle,
+      };
+      return sqsInput.deleteSQS(params);
+    })
+    .then(() => {
+      params = [];
+      for (const key in inputs.adClicks) {
+        params.push(inputs.adClicks[key]);
+      }
+      return db.insertAdClicks(userId, params)
+    })
     .then((data) => {
       if (!inputs.scoreDropped) {
         throw data;
@@ -31,16 +46,23 @@ router.post('/', (req, res) => {
       }
     })
     .then((ratio) => {
+      console.log('ABOUT TO GET INTERESTS')
       outputs.ratio = ratio;
       outputs.numAds = Math.floor(32 * outputs.ratio);
       return db.getTopAdInterests(userId);
     })
     .then((interests) => {
+      console.log('GOT INTERESTS')
       interests.forEach((interest) => {
         outputs.interests.push(interest.name);
         topCategories.push(interest.categoryId);
       });
-      return workers.sendMessage(outputs);
+      params = {
+        MessageBody: JSON.stringify(outputs),
+        QueueUrl: queueUrl.OUTPUT_QUEUE_URL,
+        DelaySeconds: 0,
+      };
+      return sqsOutput.sendMessage(params);
     })
     .then(() => {
       return dashboard.visualizeUserData(outputs);
@@ -49,8 +71,11 @@ router.post('/', (req, res) => {
       const param = [userId, outputs.ratio, engagement].concat(topCategories);
       return db.insertNewData(param);
     })
-    .catch((error) => {
-    })
-});
+    .catch((err) => {
+      // catch unhandled data from scoreDropped = false
+    });  
+}
+
+setInterval(processData, 2000);
 
 module.exports = router;
