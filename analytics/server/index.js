@@ -1,5 +1,4 @@
 const express = require('express');
-const db = require('../database/index.js');
 const router = require('../routes/analyze.js').router;
 const cluster = require('cluster');
 const cpuCount = require('os').cpus().length;
@@ -17,10 +16,8 @@ if (cluster.isMaster) {
   module.exports.app = app;
   const PORT = 3000;
   app.use(bodyParser.json());
-  
   // set up routes
   app.use('/analyze', router);
-  
   app.listen(PORT, (err) => {
     if (err) {
       console.log('cannot connect to server', err);
