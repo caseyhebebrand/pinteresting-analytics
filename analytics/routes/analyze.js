@@ -56,9 +56,10 @@ const processData = () => {
     })
     .then((interests) => {
       interests.forEach((interest) => {
-        outputs.interests.push(interest.name);
+        outputs.interests.push(interest.categoryId);
         topCategories.push(interest.categoryId);
       });
+      console.log(outputs.interests)
       params = {
         MessageBody: JSON.stringify(outputs),
         QueueUrl: queueUrl.OUTPUT_QUEUE_URL,
@@ -75,7 +76,6 @@ const processData = () => {
     })
     .catch((err) => {
       // catch unhandled data from scoreDropped = false
-      console.log('CATCHING', err);
     });  
 }
 
