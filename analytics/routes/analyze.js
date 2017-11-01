@@ -21,15 +21,19 @@ const processData = () => {
   };
   sqsInput.receiveSQS(params)
     .then((data) => {
-      inputs = JSON.parse(data.Messages[0].Body);
-      userId = inputs.userId;
-      outputs.userId = userId;
-      engagement = inputs.engagementScore;
-      params = {
-        QueueUrl: queueUrl.INPUT_QUEUE_URL,
-        ReceiptHandle: data.Messages[0].ReceiptHandle,
-      };
-      return sqsInput.deleteSQS(params);
+      if (data.Messages && data.Messages.length > 0) {
+        inputs = JSON.parse(data.Messages[0].Body);
+        userId = inputs.userId;
+        outputs.userId = userId;
+        engagement = inputs.engagementScore;
+        params = {
+          QueueUrl: queueUrl.INPUT_QUEUE_URL,
+          ReceiptHandle: data.Messages[0].ReceiptHandle,
+        };
+        return sqsInput.deleteSQS(params);
+      } else {
+        throw data;
+      }
     })
     .then(() => {
       params = [];
@@ -46,13 +50,11 @@ const processData = () => {
       }
     })
     .then((ratio) => {
-      console.log('ABOUT TO GET INTERESTS')
       outputs.ratio = ratio;
       outputs.numAds = Math.floor(32 * outputs.ratio);
       return db.getTopAdInterests(userId);
     })
     .then((interests) => {
-      console.log('GOT INTERESTS')
       interests.forEach((interest) => {
         outputs.interests.push(interest.name);
         topCategories.push(interest.categoryId);
@@ -73,9 +75,10 @@ const processData = () => {
     })
     .catch((err) => {
       // catch unhandled data from scoreDropped = false
+      console.log('CATCHING', err);
     });  
 }
 
-setInterval(processData, 2000);
+setInterval(processData, 100);
 
 module.exports = router;
