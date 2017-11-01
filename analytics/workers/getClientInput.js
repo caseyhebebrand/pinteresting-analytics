@@ -1,36 +1,57 @@
-const aws = require('aws-sdk');
+const AWS = require('aws-sdk');
+const Consumer = require('sqs-consumer');
+const queueUrl = require('../../config.js').INPUT_QUEUE_URL;
+const processData = require('./process.js').process;
+
+
 
 // load aws credentials
-aws.config.loadFromPath(__dirname + '/config.json');
+AWS.config.loadFromPath(__dirname + '/config.json');
+
+const consumer = Consumer.create({
+  queueUrl: queueUrl,
+  waitTimeSeconds: 10,
+  handleMessage: (message, done) => {
+    console.log('getting the message');
+    processData(message);
+    done();
+  },
+  sqs: new AWS.SQS(),
+});
+
+
 // Instantiate SQS
-const sqs = new aws.SQS();
-const receiveSQS = (params) => {
-  return new Promise((resolve, reject) => {
-    sqs.receiveMessage(params, (err, data) => {
-      if (err) {
-        //console.log('error receiving')
-        reject(err);
-      } else {
-        //console.log('success receiving')
-        resolve(data);
-      }
-    });
-  });
-};
-const deleteSQS = (params) => {
-  return new Promise((resolve, reject) => {
-    sqs.deleteMessage(params, (err, data) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(data);
-      }
-    });
-  });
-};
+// const sqs = new aws.SQS();
+// const receiveSQS = (params) => {
+//   return new Promise((resolve, reject) => {
+//     sqs.receiveMessage(params, (err, data) => {
+//       if (err) {
+//         //console.log('error receiving')
+//         reject(err);
+//       } else {
+//         //console.log('success receiving')
+//         resolve(data);
+//       }
+//     });
+//   });
+// };
+// const deleteSQS = (params) => {
+//   return new Promise((resolve, reject) => {
+//     sqs.deleteMessage(params, (err, data) => {
+//       if (err) {
+//         reject(err);
+//       } else {
+//         resolve(data);
+//       }
+//     });
+//   });
+// };
+
+// module.exports = {
+//   receiveSQS,
+//   deleteSQS,
+// };
 
 module.exports = {
-  receiveSQS,
-  deleteSQS,
+  consumer,
 };
-

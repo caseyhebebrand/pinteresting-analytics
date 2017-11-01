@@ -1,6 +1,6 @@
 const express = require('express');
 const db = require('../database/index.js');
-const router = require('../routes/analyze.js');
+const router = require('../routes/analyze.js').router;
 const cluster = require('cluster');
 const cpuCount = require('os').cpus().length;
 const bodyParser = require('body-parser');
