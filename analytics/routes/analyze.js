@@ -46,11 +46,13 @@ const processData = () => {
       }
     })
     .then((ratio) => {
+      console.log('ABOUT TO GET INTERESTS')
       outputs.ratio = ratio;
       outputs.numAds = Math.floor(32 * outputs.ratio);
       return db.getTopAdInterests(userId);
     })
     .then((interests) => {
+      console.log('GOT INTERESTS')
       interests.forEach((interest) => {
         outputs.interests.push(interest.name);
         topCategories.push(interest.categoryId);
@@ -63,7 +65,6 @@ const processData = () => {
       return sqsOutput.sendMessage(params);
     })
     .then(() => {
-      console.log("DATA JUST SENT")
       return dashboard.visualizeUserData(outputs);
     })
     .then(() => {
