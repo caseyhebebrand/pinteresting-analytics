@@ -26,7 +26,8 @@
     "express": "^4.16.2",
     "mysql": "^2.15.0",
     "request": "^2.83.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "sqs-consumer": "^3.8.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.1",
