@@ -6,6 +6,8 @@ const data = require('../client_module/dataGenerator.js');
 const should = chai.should();
 chai.use(chaiHttp);
 
+
+// deprecated - used to test http request pre-message bus implementation
 describe('POST to /analyze', () => {
   it('it should POST an object conatining user bahvior data', (done) => {
     const userInfo = data.userLogOut();

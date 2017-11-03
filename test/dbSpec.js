@@ -4,7 +4,7 @@ const Promise = require('bluebird');
 const expect = require('chai').expect;
 
 describe('Analytics relational database', () => {
-  const cbMysql;
+  let cbMysql;
   
   beforeEach( (done) => {
     connection = mysql.createConnection({
