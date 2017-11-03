@@ -5,7 +5,7 @@ class UserStats {
     this.userId = Math.floor((Math.random()) * 100);
     this.adClicks = {};
     this.engagementScore = Number(Math.random().toFixed(4));
-    this.scoreDropped = Math.random() < 0.5 ? true : false;
+    this.scoreDropped = Math.random();
     this.adClicks.food = Math.floor(Math.random() * 10);
     this.adClicks.fashion = Math.floor(Math.random() * 10);
     this.adClicks.products = Math.floor(Math.random() * 10);
@@ -19,8 +19,8 @@ class UserStats {
   }
 }
 
-const userLogOut = () => new UserStats;
+const userLogOut = () => new UserStats();
 
 module.exports = {
-  userLogOut
+  userLogOut,
 };

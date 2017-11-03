@@ -9,6 +9,7 @@ const PORT = 2020;
 
 const sendData = () => {
   const body = data.userLogOut();
+  console.log(body);
   const params = {
     MessageBody: JSON.stringify(body),
     QueueUrl: queueUrl.INPUT_QUEUE_URL,
