@@ -28,6 +28,17 @@ const insertNewData = (params) => {
     });
 };
 
+const insertAdClicks = (id, params) => {
+  const query = `INSERT INTO user_inputs (usersId, categoryId, clicks) VALUES (${id}, 1, ?), (${id}, 2, ?), (${id}, 3, ?), (${id}, 4, ?), (${id}, 5, ?), (${id}, 6, ?), (${id}, 7, ?), (${id}, 8, ?), (${id}, 9, ?), (${id}, 10, ?);`;
+  return connection.queryAsync(query, params)
+    .then(data => data)
+    .catch((err) => {
+      console.error(err);
+      return err;
+    });
+};
+
 module.exports = {
   insertNewData,
+  insertAdClicks,
 };
