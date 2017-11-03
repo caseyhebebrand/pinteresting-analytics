@@ -8,22 +8,20 @@ if (cluster.isMaster) {
   for (let i = 0; i < cpuCount; i += 1) {
     cluster.fork();
   }
-  cluster.on('exit', (worker) => {
+  cluster.on('exit', () => {
     cluster.fork();
   });
 } else {
   const app = express();
   module.exports.app = app;
   const PORT = 3003;
-  
   app.use(bodyParser.json());
   app.use('/analytics', router);
-  
   app.listen(PORT, (err) => {
     if (err) {
       console.log('cannot connect to server', err);
     } else {
       console.log(`ad aggregator module listening on port ${PORT}`);
-    };
+    }
   });
 }

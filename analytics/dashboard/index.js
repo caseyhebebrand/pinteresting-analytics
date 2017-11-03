@@ -1,7 +1,7 @@
 const elasticsearch = require('elasticsearch');
 
 const client = new elasticsearch.Client({
-  host: 'localhost:9200',
+  host: 'https://search-pinterestinganalytics-kidsizmu32stczhjpmos4ymekq.us-west-2.es.amazonaws.com',
   log: 'trace',
 });
 
@@ -30,7 +30,7 @@ const submitInputIndex = (userInputs) => {
         resolve(result);
       }
     });
-  })
+  });
 };
 
 const visualizeUserData = (userData) => {

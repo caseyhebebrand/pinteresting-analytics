@@ -8,7 +8,7 @@ if (cluster.isMaster) {
   for (let i = 0; i < cpuCount; i += 1) {
     cluster.fork();
   }
-  cluster.on('exit', (worker) => {
+  cluster.on('exit', () => {
     cluster.fork();
   });
 } else {
