@@ -3,11 +3,11 @@ const Promise = require('bluebird');
 const config = require('../../config.js');
 
 const cbMysql = mysql.createConnection({
-  host: config.MYSQL_HOST || 'localhost',
-  port: config.MYSQL_PORT || 3306,
-  user: config.MYSQL_USERNAME || 'root',
-  password: config.MYSQL_PASSWORD || '',
-  database: 'analytics',
+  host: process.env.MYSQL_HOST || config.MYSQL_HOST,
+  port: process.env.MYSQL_PORT || config.MYSQL_PORT,
+  user: process.env.MYSQL_USERNAME || config.MYSQL_USERNAME,
+  password: process.env.MYSQL_PASSWORD || config.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE || config.MYSQL_DATABASE,
 });
 
 cbMysql.connect((err) => {
