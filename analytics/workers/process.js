@@ -39,7 +39,7 @@ const process = (message) => {
       });
       params = {
         MessageBody: JSON.stringify(outputs),
-        QueueUrl: queueUrl.OUTPUT_QUEUE_URL,
+        QueueUrl: process.env.SQS_OUTPUT_URL || queueUrl.OUTPUT_QUEUE_URL,
         DelaySeconds: 0,
       };
       return sqsOutput.sendMessage(params);

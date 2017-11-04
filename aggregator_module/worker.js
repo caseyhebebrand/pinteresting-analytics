@@ -10,13 +10,13 @@ AWS.config.update({
   region: process.env.AWS_SQS_REGION || awsAccess.region,
 });
 // Can use below on local env
-//AWS.config.loadFromPath(__dirname + '/config.json');
+// AWS.config.loadFromPath(__dirname + '/config.json');
 
 const consumer = Consumer.create({
   queueUrl: process.env.SQS_OUTPUT_URL || queueUrl,
   waitTimeSeconds: 10,
   handleMessage: (message, done) => {
-    console.log('AD got the message', message)
+    console.log('AD got the message', message);
     done();
   },
   sqs: new AWS.SQS(),

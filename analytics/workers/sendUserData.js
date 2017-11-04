@@ -1,9 +1,16 @@
-const aws = require('aws-sdk');
+const AWS = require('aws-sdk');
+const awsAccess = require('../../config.js');
 
 // load aws credentials
-aws.config.loadFromPath(__dirname + '/config.json');
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID || awsAccess.accessKeyId,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || awsAccess.secretAccessKey,
+  region: process.env.AWS_SQS_REGION || awsAccess.region,
+});
+// AWS.config.loadFromPath(__dirname + '/config.json');
+
 // Instantiate SQS
-const sqs = new aws.SQS();
+const sqs = new AWS.SQS();
 const sendMessage = (params) => {
   return new Promise((resolve, reject) => {
     sqs.sendMessage(params, (err, data) => {
