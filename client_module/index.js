@@ -1,6 +1,5 @@
 const express = require('express');
 const data = require('./dataGenerator.js');
-const request = require('request-promise');
 const worker = require('./worker.js');
 const queueUrl = require('../config.js');
 
@@ -9,10 +8,9 @@ const PORT = 2020;
 
 const sendData = () => {
   const body = data.userLogOut();
-  console.log(body);
   const params = {
     MessageBody: JSON.stringify(body),
-    QueueUrl: queueUrl.INPUT_QUEUE_URL,
+    QueueUrl: process.env.SQS_INPUT_URL || queueUrl.INPUT_QUEUE_URL,
     DelaySeconds: 0,
   };
 

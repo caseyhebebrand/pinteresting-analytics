@@ -13,7 +13,7 @@ AWS.config.update({
 //AWS.config.loadFromPath(__dirname + '/config.json');
 
 const consumer = Consumer.create({
-  queueUrl: process.env.ES_HOST || queueUrl,
+  queueUrl: process.env.SQS_OUTPUT_URL || queueUrl,
   waitTimeSeconds: 10,
   handleMessage: (message, done) => {
     console.log('AD got the message', message)
