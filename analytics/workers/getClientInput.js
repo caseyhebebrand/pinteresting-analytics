@@ -2,7 +2,7 @@ const AWS = require('aws-sdk');
 const Consumer = require('sqs-consumer');
 const queueUrl = require('../../config.js').INPUT_QUEUE_URL;
 const awsAccess = require('../../config.json');
-const processData = require('./process.js').process;
+const processData = require('./process.js').processData;
 
 // load aws credentials
 AWS.config.update({

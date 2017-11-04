@@ -7,7 +7,7 @@ const cbMysql = mysql.createConnection({
   port: process.env.MYSQL_PORT || dbAccess.MYSQL_PORT,
   user: process.env.MYSQL_USERNAME || dbAccess.MYSQL_USERNAME,
   password: process.env.MYSQL_PASSWORD || dbAccess.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE || process.env.MYSQL_DATABASE,
+  database: process.env.MYSQL_DATABASE || dbAccess.MYSQL_DATABASE,
 });
 
 cbMysql.connect((err) => {

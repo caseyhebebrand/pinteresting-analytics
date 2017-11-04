@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const awsAccess = require('../../config.js');
+const awsAccess = require('../../config.json');
 
 // load aws credentials
 AWS.config.update({
