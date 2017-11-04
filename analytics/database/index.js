@@ -50,7 +50,7 @@ const getUserHistory = (userId) => {
 };
 
 const getTopAdInterests = (userId) => {
-  const query = 'SELECT i.name, u.categoryId, SUM(u.clicks) AS totalClicks FROM (SELECT * FROM user_inputs WHERE usersId = ? ORDER BY createdAt DESC LIMIT 250) AS u JOIN interests AS i ON i.id = u.categoryId GROUP BY i.name, u.categoryId ORDER BY totalClicks DESC LIMIT 3;';
+  const query = 'SELECT i.name, u.categoryId, SUM(u.clicks) AS totalClicks FROM (SELECT * FROM user_inputs WHERE usersId = ? ORDER BY id DESC LIMIT 250) AS u JOIN interests AS i ON i.id = u.categoryId GROUP BY i.name, u.categoryId ORDER BY totalClicks DESC LIMIT 3;';
   return connection.queryAsync(query, [userId])
     .then(data => data)
     .catch((err) => {
