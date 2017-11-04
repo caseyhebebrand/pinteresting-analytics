@@ -31,6 +31,10 @@ CREATE TABLE user_inputs (
   FOREIGN KEY (categoryId) REFERENCES interests(id)
 );
 
+CREATE INDEX inputId ON user_inputs (usersId);
+CREATE INDEX id ON user_inputs (id DESC);
+CREATE INDEX userId ON user_data (userId);
+
 INSERT INTO interests (name) VALUES 
   ("food"), ("fashion"), ("products"), ("sports"), ("travel"),
   ("events"), ("design"), ("entertainment"), ("DIY/crafts"), ("photography");

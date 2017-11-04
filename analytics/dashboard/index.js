@@ -1,7 +1,8 @@
 const elasticsearch = require('elasticsearch');
+const esAccess = require('../../config.js');
 
 const client = new elasticsearch.Client({
-  host: 'https://search-pinterestinganalytics-kidsizmu32stczhjpmos4ymekq.us-west-2.es.amazonaws.com',
+  host: process.env.ES_HOST || esAccess.ES_HOST,
   log: 'trace',
 });
 
@@ -16,17 +17,15 @@ client.ping({
 });
 
 const submitInputIndex = (userInputs) => {
-  return new Promise ((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     client.index({
       index: 'analytics',
       type: 'inputs',
       body: userInputs,
     }, (err, result) => {
       if (err) {
-        console.error('Elasticsearch insertion error', err);
         reject(err);
       } else {
-        console.log('SUCCESS inserting into elastic search', result);
         resolve(result);
       }
     });
@@ -34,21 +33,19 @@ const submitInputIndex = (userInputs) => {
 };
 
 const visualizeUserData = (userData) => {
-  return new Promise ((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     client.index({
       index: 'post-analysis',
       type: 'output',
       body: userData,
     }, (err, result) => {
       if (err) {
-        console.error('Elasticsearch insertion error', err);
         reject(err);
       } else {
-        console.log('SUCCESS inserting into elastic search', result);
         resolve(result);
       }
     });
-  })
+  });
 };
 
 module.exports = {

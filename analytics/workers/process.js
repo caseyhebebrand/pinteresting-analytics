@@ -3,8 +3,9 @@ const dashboard = require('../dashboard/index.js');
 const analysis = require('../analysis/ratioRegression.js');
 const sqsOutput = require('../workers/sendUserData.js');
 const queueUrl = require('../../config.js');
+const url = process.env.SQS_OUTPUT_URL || queueUrl.OUTPUT_QUEUE_URL;
 
-const process = (message) => {
+const processData = (message) => {
   const inputs = JSON.parse(message);
   const userId = inputs.userId;
   const engagement = inputs.engagementScore;
@@ -39,7 +40,7 @@ const process = (message) => {
       });
       params = {
         MessageBody: JSON.stringify(outputs),
-        QueueUrl: queueUrl.OUTPUT_QUEUE_URL,
+        QueueUrl: url,
         DelaySeconds: 0,
       };
       return sqsOutput.sendMessage(params);
@@ -53,5 +54,5 @@ const process = (message) => {
 };
 
 module.exports = {
-  process,
+  processData,
 };

@@ -54,7 +54,7 @@ const calculateRatio = (userId, currentScore) => {
       } else if (results.length === 1) {
         return 0.18;
       }
-    })
+    });
 };
 
 module.exports = {

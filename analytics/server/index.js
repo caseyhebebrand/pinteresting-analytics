@@ -14,7 +14,7 @@ if (cluster.isMaster) {
 } else {
   const app = express();
   module.exports.app = app;
-  const PORT = 3000;
+  const PORT = process.env.PORT || 3000;
   app.use(bodyParser.json());
   // set up routes
   app.use('/analyze', router);
