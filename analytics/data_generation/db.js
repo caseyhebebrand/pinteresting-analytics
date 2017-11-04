@@ -1,12 +1,13 @@
 const mysql = require('mysql');
 const Promise = require('bluebird');
+const dbAccess = require('../../config.js');
 
 const cbMysql = mysql.createConnection({
-  host: 'localhost',
-  port: 3306,
-  user: 'root',
-  password: '',
-  database: 'analytics',
+  host: process.env.MYSQL_HOST || dbAccess.MYSQL_HOST,
+  port: process.env.MYSQL_PORT || dbAccess.MYSQL_PORT,
+  user: process.env.MYSQL_USERNAME || dbAccess.MYSQL_USERNAME,
+  password: process.env.MYSQL_PASSWORD || dbAccess.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE || process.env.MYSQL_DATABASE,
 });
 
 cbMysql.connect((err) => {
