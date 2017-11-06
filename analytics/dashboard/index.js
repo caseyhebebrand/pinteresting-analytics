@@ -1,5 +1,6 @@
 const elasticsearch = require('elasticsearch');
-const esAccess = require('../../config.js');
+// Uncomment for use locally
+//const esAccess = require('../../config.js');
 
 const client = new elasticsearch.Client({
   host: process.env.ES_HOST || esAccess.ES_HOST,

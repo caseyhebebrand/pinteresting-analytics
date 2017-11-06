@@ -1,19 +1,18 @@
 const AWS = require('aws-sdk');
 const Consumer = require('sqs-consumer');
-const queueUrl = require('../config.js').OUTPUT_QUEUE_URL;
-const awsAccess = require('../config.json');
+// uncomment for use locally 
+// const config = require('../config.js');
+
 
 // load aws credentials
 AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID || awsAccess.accessKeyId,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ||awsAccess.secretAccessKey,
-  region: process.env.AWS_SQS_REGION || awsAccess.region,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID_AD || config.AWS_ACCESS_KEY_ID_AD,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_AD ||config.AWS_SECRET_ACCESS_KEY_AD,
+  region: process.env.AWS_SQS_REGION || config.AWS_SQS_REGION,
 });
-// Can use below on local env
-// AWS.config.loadFromPath(__dirname + '/config.json');
 
 const consumer = Consumer.create({
-  queueUrl: process.env.SQS_OUTPUT_URL || queueUrl,
+  queueUrl: process.env.SQS_OUTPUT_URL || config.SQS_OUTPUT_URL,
   waitTimeSeconds: 10,
   handleMessage: (message, done) => {
     console.log('AD got the message', message);

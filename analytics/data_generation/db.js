@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const Promise = require('bluebird');
-const dbAccess = require('../../config.js');
+// Uncomment for use locally
+// const dbAccess = require('../../config.js');
 
 const cbMysql = mysql.createConnection({
   host: process.env.MYSQL_HOST || dbAccess.MYSQL_HOST,
