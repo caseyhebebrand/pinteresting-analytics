@@ -7,7 +7,7 @@ const config = require('../config.js');
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID_AD || config.AWS_ACCESS_KEY_ID_AD,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_AD ||config.AWS_SECRET_ACCESS_KEY_AD,
-  region: process.env.AWS_SQS_REGION || awsAccess.AWS_SQS_REGION,
+  region: process.env.AWS_SQS_REGION || config.AWS_SQS_REGION,
 });
 
 const consumer = Consumer.create({

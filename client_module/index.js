@@ -10,7 +10,7 @@ const sendData = () => {
   const body = data.userLogOut();
   const params = {
     MessageBody: JSON.stringify(body),
-    QueueUrl: process.env.SQS_INPUT_URL || config.INPUT_QUEUE_URL,
+    QueueUrl: process.env.SQS_INPUT_URL || config.SQS_INPUT_URL,
     DelaySeconds: 0,
   };
 
