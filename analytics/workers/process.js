@@ -2,7 +2,8 @@ const db = require('../database/index.js');
 const dashboard = require('../dashboard/index.js');
 const analysis = require('../analysis/ratioRegression.js');
 const sqsOutput = require('../workers/sendUserData.js');
-const config = require('../../config.js');
+// Uncomment for use locally:
+// const config = require('../../config.js');
 
 const processData = (message) => {
   const inputs = JSON.parse(message);

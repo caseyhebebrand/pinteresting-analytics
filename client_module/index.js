@@ -1,7 +1,8 @@
 const express = require('express');
 const data = require('./dataGenerator.js');
 const worker = require('./worker.js');
-const config = require('../config.js');
+// Uncomment for use locally:
+// const config = require('../config.js');
 
 const app = express();
 const PORT = 2020;

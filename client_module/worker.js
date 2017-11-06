@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
-const config = require('../config.js');
+// Uncomment for use locally:
+// const config = require('../config.js');
 
 // load aws credentials
 AWS.config.update({

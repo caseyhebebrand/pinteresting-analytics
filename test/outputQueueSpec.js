@@ -30,10 +30,14 @@ describe ('Input SQS queue', () => {
 
     sqsOutput.sendMessage(params)
       .then(() => {
-        AWS.config.loadFromPath(__dirname + '/config.json');
+        AWS.config.update({
+          accessKeyId: process.env.AWS_ACCESS_KEY_ID_AD || config.AWS_ACCESS_KEY_ID_AD,
+          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_AD || config.AWS_SECRET_ACCESS_KEY_AD,
+          region: process.env.AWS_SQS_REGION || config.AWS_SQS_REGION,
+        });
         
         const consumer = Consumer.create({
-          queueUrl: 'https://sqs.us-west-2.amazonaws.com/470758207750/test',
+          queueUrl: process.env.SQS_OUTPUT_URL || config.SQS_OUTPUT_URL,
           waitTimeSeconds: 10,
           handleMessage: (message, done) => {
             message = JSON.parse(message.Body);

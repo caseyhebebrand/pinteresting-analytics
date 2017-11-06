@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk');
 const Consumer = require('sqs-consumer');
-const config = require('../config.js');
+// uncomment for use locally 
+// const config = require('../config.js');
 
 
 // load aws credentials

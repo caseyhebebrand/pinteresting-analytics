@@ -1,7 +1,8 @@
 const AWS = require('aws-sdk');
 const Consumer = require('sqs-consumer');
-const config = require('../../config.js');
 const processData = require('./process.js').processData;
+// Uncomment for use locally:
+// const config = require('../../config.js');
 
 // load aws credentials
 AWS.config.update({
@@ -9,7 +10,6 @@ AWS.config.update({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_AD || config.AWS_SECRET_ACCESS_KEY_AD,
   region: process.env.AWS_SQS_REGION || config.AWS_SQS_REGION,
 });
-// AWS.config.loadFromPath(__dirname + '/config.json');
 
 const consumer = Consumer.create({
   queueUrl: process.env.SQS_INPUT_URL || config.SQS_INPUT_URL,
