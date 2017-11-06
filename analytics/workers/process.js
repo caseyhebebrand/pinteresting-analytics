@@ -2,8 +2,7 @@ const db = require('../database/index.js');
 const dashboard = require('../dashboard/index.js');
 const analysis = require('../analysis/ratioRegression.js');
 const sqsOutput = require('../workers/sendUserData.js');
-const queueUrl = require('../../config.js');
-const url = process.env.SQS_OUTPUT_URL || queueUrl.OUTPUT_QUEUE_URL;
+const config = require('../../config.js');
 
 const processData = (message) => {
   const inputs = JSON.parse(message);
@@ -40,7 +39,7 @@ const processData = (message) => {
       });
       params = {
         MessageBody: JSON.stringify(outputs),
-        QueueUrl: url,
+        QueueUrl: process.env.SQS_OUTPUT_URL || config.OUTPUT_QUEUE_URL;,
         DelaySeconds: 0,
       };
       return sqsOutput.sendMessage(params);
