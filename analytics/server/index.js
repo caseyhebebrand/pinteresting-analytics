@@ -18,6 +18,12 @@ if (cluster.isMaster) {
   app.use(bodyParser.json());
   // set up routes
   app.use('/analyze', router);
+
+  app.get('/', (req, res) => {
+    const data = 'Hello! Welcome to the Pinteresting Analytics microservice. Now performing analysis...'
+    res.send(data)
+  });
+
   app.listen(PORT, (err) => {
     if (err) {
       console.log('cannot connect to server', err);
