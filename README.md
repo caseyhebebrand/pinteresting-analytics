@@ -27,15 +27,16 @@ After cloning this repo run npm install. Create a config file for variables asso
 
 ## Other Information
 
-Pinteresting Analytics is a component architected as part of a Pinterest-based service that curates advertisement quantity and advertisement content based on user history.
+Pinteresting Analytics is a component architected as part of a Pinterest-based service that curates advertisement quantity and advertisement content based on user history. This component has been load tested with 10M+ data entries over a period of 3 months. 
 
 System architecture:
 ![alt tag](/photos/architecture.png)
 
 When a user's session ends, the analytics component receives a user id, a summary of ad clicks, an engagement score, and a boolean indicating if their enagement has dropped below a threshold. The analytics component will store the ad-click history. If the engagement boolean is true: 
 1) User ad ratio vs. enagement history will be pulled from the database. A linear regression will be used to assess a new ad ratio. The advertisement to pin ratio determines the user's optimal advertisement quantity.
-2) Top top three ad categories for a user are determined based on number of clicks in their past sessions.
-This information is passed to the advertisement aggregator, which will utilize this information on the user's next session. 
+2) Top top three ad categories for a user are determined based on number of clicks in their past sessions.  
+
+The results of the analysis are stored as part of the user session history and passed to the advertisement aggregator.
 
 Analytics component:
 ![alt tag](/photos/analytics.png)
